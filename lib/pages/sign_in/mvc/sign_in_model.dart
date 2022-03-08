@@ -1,12 +1,12 @@
-import 'package:simple_pizza_app/cubits/models/validators.dart';
+import 'package:simple_pizza_app/pages/sign_in/mvc/validators.dart';
 
-enum EmailSignInFormType { signIn, register }
+enum SignInFormType { signIn, register }
 
-class EmailSignInModel with EmailAndPasswordValidators {
-  EmailSignInModel({
+class SignInModel with EmailAndPasswordValidators {
+  SignInModel({
     this.email = '',
     this.password = '',
-    this.formType = EmailSignInFormType.signIn,
+    this.formType = SignInFormType.signIn,
     this.isLoading = false,
     this.submitted = false,
 
@@ -16,8 +16,8 @@ class EmailSignInModel with EmailAndPasswordValidators {
   });
   final String email;
   final String password;
-  final EmailSignInFormType formType;
-  final bool isLoading;
+  final SignInFormType formType;
+  final bool isLoading; //todo: remove this loading shit!
   final bool submitted;
 
   //todo: added myself, probably remove
@@ -27,13 +27,13 @@ class EmailSignInModel with EmailAndPasswordValidators {
   Map<String, Validator> validators = {'email': Validator()};
 
   String get primaryButtonText {
-    return formType == EmailSignInFormType.signIn ? 'Войти' : 'Создать аккаунт';
+    return formType == SignInFormType.signIn ? 'Sign In' : 'Sign Up';
   }
 
   String get secondaryButtonText {
-    return formType == EmailSignInFormType.signIn
-        ? 'Впервые? Зарегистрируйтесь'
-        : 'Есть аккаунт? Войти';
+    return formType == SignInFormType.signIn
+        ? 'First time? Create an account'
+        : 'Already registered? Sign in';
   }
 
   bool get canSubmit {
@@ -52,16 +52,21 @@ class EmailSignInModel with EmailAndPasswordValidators {
     return showErrorText ? invalidEmailErrorText : null;
   }
 
-  EmailSignInModel copyWith({
+  //todo: why needed?
+  SignInModel copyWith({
     String? email,
     String? password,
-    EmailSignInFormType? formType,
+    String? phone,
+    String? name,
+    SignInFormType? formType,
     bool? isLoading,
     bool? submitted,
   }) {
-    return EmailSignInModel(
+    return SignInModel(
       email: email ?? this.email,
       password: password ?? this.password,
+      name: name ?? this.name,
+      phone: phone ?? this.phone,
       formType: formType ?? this.formType,
       isLoading: isLoading ?? this.isLoading,
       submitted: submitted ?? this.submitted,

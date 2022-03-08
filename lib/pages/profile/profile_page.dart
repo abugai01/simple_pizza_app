@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_pizza_app/cubits/profile_cubit.dart';
 import 'package:simple_pizza_app/helpers/screen_navigation.dart';
-import 'package:simple_pizza_app/pages/profile/screens/addresses_page.dart';
 import 'package:simple_pizza_app/pages/profile/screens/personal_info_page.dart';
 import 'package:simple_pizza_app/pages/sign_in/mvc/auth_cubit.dart';
 import 'package:simple_pizza_app/pages/sign_in/sign_in_page.dart';
@@ -54,13 +53,6 @@ class ProfilePage extends StatelessWidget {
             title: const Text("Personal info"),
             trailing: null,
             onTap: () => changeScreen(context, PersonalInfoPage()),
-          ),
-          ListTile(
-            horizontalTitleGap: 0,
-            leading: const Icon(Icons.maps_home_work),
-            title: const Text("Addresses"),
-            trailing: null,
-            onTap: () => changeScreen(context, AddressesPage()),
           ),
           ListTile(
             horizontalTitleGap: 0,

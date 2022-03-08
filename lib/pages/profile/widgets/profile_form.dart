@@ -23,7 +23,6 @@ class ProfileFormState extends State<ProfileForm> {
   String labelSurname = "Surname";
   String labelPhone = "Phone";
   String labelEmail = "Email";
-  String labelBirthday = "Birthday";
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class ProfileFormState extends State<ProfileForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-            //Имя
+            // Name
             Flexible(
               child: TextFormField(
                 controller: widget.controllers[Profile.NAME],
@@ -52,7 +51,7 @@ class ProfileFormState extends State<ProfileForm> {
               ),
             ),
             const SizedBox(width: 20),
-            //Фамилия
+            // Surname
             Flexible(
               child: TextFormField(
                 controller: widget.controllers[Profile.SURNAME],
@@ -70,7 +69,7 @@ class ProfileFormState extends State<ProfileForm> {
             ),
           ]),
           const SizedBox(height: 10),
-          //Телефон
+          // Phone
           TextFormField(
             controller: widget.controllers[Profile.PHONE],
             readOnly: true,
@@ -78,7 +77,7 @@ class ProfileFormState extends State<ProfileForm> {
             //todo: phone validation and mask1
           ),
           const SizedBox(height: 10),
-          //Электронная почта
+          // Email
           TextFormField(
             controller: widget.controllers[Profile.EMAIL],
             keyboardType: TextInputType.emailAddress,
@@ -92,25 +91,7 @@ class ProfileFormState extends State<ProfileForm> {
               return null;
             },
           ),
-          TextFormField(
-            controller: widget.controllers[Profile.BIRTHDAY],
-            readOnly: true,
-            //keyboardType: TextInputType.datetime,
-            decoration: InputDecoration(labelText: labelBirthday),
-            onTap: () {
-              //context.read<ProfileCubit>().selectBirthday(context);
-              //todo: implementation!!
-            },
-            validator: (value) {
-              if (value != null && value.isNotEmpty) {
-                if (!isBefore(value)) {
-                  return ErrorMessages.validationErrorMessages.futureDate;
-                }
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
         ],
       ),
     );

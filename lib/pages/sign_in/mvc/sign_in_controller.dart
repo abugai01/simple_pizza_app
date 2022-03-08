@@ -1,18 +1,19 @@
 import 'dart:async';
 
-import 'package:simple_pizza_app/cubits/models/email_sign_in_model.dart';
 import 'package:simple_pizza_app/pages/sign_in/mvc/auth_service.dart';
 
+import 'sign_in_model.dart';
+
 //todo: rewrite
-class EmailSignInBloc {
-  EmailSignInBloc({required this.auth});
+class SignInController {
+  SignInController({required this.auth});
 
   final AuthBase auth;
-  final StreamController<EmailSignInModel> _modelController =
-      StreamController<EmailSignInModel>();
-  EmailSignInModel _model = EmailSignInModel();
+  final StreamController<SignInModel> _modelController =
+      StreamController<SignInModel>();
+  SignInModel _model = SignInModel();
 
-  Stream<EmailSignInModel> get modelStream => _modelController.stream;
+  Stream<SignInModel> get modelStream => _modelController.stream;
 
   void dispose() {
     _modelController.close();
@@ -21,7 +22,7 @@ class EmailSignInBloc {
   Future<void> submit() async {
     updateWith(submitted: true, isLoading: true);
     try {
-      if (_model.formType == EmailSignInFormType.signIn) {
+      if (_model.formType == SignInFormType.signIn) {
         await auth.signInWithEmailAndPassword(_model.email, _model.password);
       } else {
         await auth.createUserWithEmailAndPassword(
@@ -34,9 +35,9 @@ class EmailSignInBloc {
   }
 
   void toggleFormType() {
-    final formType = _model.formType == EmailSignInFormType.signIn
-        ? EmailSignInFormType.register
-        : EmailSignInFormType.signIn;
+    final formType = _model.formType == SignInFormType.signIn
+        ? SignInFormType.register
+        : SignInFormType.signIn;
     updateWith(
       email: '',
       password: '',
@@ -47,13 +48,16 @@ class EmailSignInBloc {
   }
 
   void updateEmail(String email) => updateWith(email: email);
-
+  void updateName(String name) => updateWith(name: name);
+  void updatePhone(String phone) => updateWith(phone: phone);
   void updatePassword(String password) => updateWith(password: password);
 
   void updateWith({
     String? email,
     String? password,
-    EmailSignInFormType? formType,
+    String? phone,
+    String? name,
+    SignInFormType? formType,
     bool? isLoading,
     bool? submitted,
   }) {
@@ -61,6 +65,8 @@ class EmailSignInBloc {
     _model = _model.copyWith(
       email: email,
       password: password,
+      phone: phone,
+      name: name,
       formType: formType,
       isLoading: isLoading,
       submitted: submitted,

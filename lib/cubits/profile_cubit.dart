@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_pizza_app/helpers/ui_messages.dart';
 import 'package:simple_pizza_app/models/profile.dart';
-import 'package:simple_pizza_app/pages/sign_in/mvc/auth_cubit.dart';
 import 'package:simple_pizza_app/services/database.dart';
 
 abstract class ProfileState extends Equatable {}
@@ -57,13 +56,13 @@ class ProfileErrorState extends ProfileState {
 
 class ProfileCubit extends Cubit<ProfileState> {
   final Database database;
-  final AuthCubit auth;
+
   late Profile? profile; //TODO: должен быть наверное не null
 
   Map<String, TextEditingController> controllers = {};
   Key formKey;
 
-  ProfileCubit(this.database, this.auth)
+  ProfileCubit(this.database)
       : formKey = GlobalKey<FormState>(),
         super(ProfileInitState()) {
     loadProfile();
@@ -122,11 +121,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   //   }
   // }
 
-  void updateProfile(
-      {String? name,
-      String? surname,
-      String? phone,
-      String? email,}) {
+  void updateProfile({
+    String? name,
+    String? surname,
+    String? phone,
+    String? email,
+  }) {
     //todo: null safety
     Profile newProfile = profile!.copy(
       name: name,
@@ -153,24 +153,26 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  void createIfNew(
-      {String? name,
-        String? surname,
-        String? phone,
-        String? email,}) async {
+  void createIfNew({
+    String? name,
+    String? surname,
+    String? phone,
+    String? email,
+  }) async {
+    try {
+      Profile? profile =
+          await database.getProfile(); //todo: this cant's be null!
 
-  try {
-  Profile? profile = await database.getProfile(); //todo: this cant's be null!
+      if (profile == null) {
+        Profile newProfile = Profile.createNew(
+            name: name, surname: surname, phone: phone, email: email);
 
-  if (profile == null) {
-    Profile newProfile = Profile.createNew(name: name, surname: surname, phone: phone, email: email);
-
-    await database.setProfile(data: newProfile.toMap());
-    //todo: maybe load profile here?
+        await database.setProfile(data: newProfile.toMap());
+        //todo: maybe load profile here?
+      }
+    } catch (e) {
+      emit(ProfileErrorState());
+      //todo: what should be emitted if error here?
+    }
   }
-  } catch (e) {
-  emit(ProfileErrorState());
-  //todo: what should be emitted if error here?
-  }
-
 }
