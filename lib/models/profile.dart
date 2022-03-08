@@ -1,20 +1,17 @@
 class Profile {
   static const NAME = 'name';
   static const SURNAME = 'surname';
-  static const PHONE = 'phone';
   static const EMAIL = 'email';
 
   String? id;
   String? name;
   String? surname;
-  String? phone;
   String? email;
 
   Profile({
     this.id,
     this.name,
     this.surname,
-    this.phone,
     this.email,
   });
 
@@ -26,7 +23,6 @@ class Profile {
             id: documentId,
             name: data[NAME],
             surname: data[SURNAME],
-            phone: data[PHONE],
             email: data[EMAIL],
           );
   }
@@ -35,7 +31,6 @@ class Profile {
     return {
       NAME: name,
       SURNAME: surname,
-      PHONE: phone,
       EMAIL: email,
     };
   }
@@ -46,7 +41,6 @@ class Profile {
       name: (name == null || name == '') ? this.name : name,
       surname: (surname == null || surname == '') ? this.surname : surname,
       email: (email == null || email == '') ? this.email : email,
-      phone: (phone == null || phone == '') ? this.phone : phone,
     );
   }
 
@@ -54,10 +48,9 @@ class Profile {
   static Profile createNew({
     String? id, //todo: needed?
     String? email,
-    String? phone,
     String? name,
     String? surname,
   }) {
-    return Profile(email: email, phone: phone, name: name, surname: surname);
+    return Profile(email: email, name: name, surname: surname);
   }
 }

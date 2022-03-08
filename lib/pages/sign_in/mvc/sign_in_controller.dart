@@ -49,13 +49,11 @@ class SignInController {
 
   void updateEmail(String email) => updateWith(email: email);
   void updateName(String name) => updateWith(name: name);
-  void updatePhone(String phone) => updateWith(phone: phone);
   void updatePassword(String password) => updateWith(password: password);
 
   void updateWith({
     String? email,
     String? password,
-    String? phone,
     String? name,
     SignInFormType? formType,
     bool? isLoading,
@@ -65,7 +63,6 @@ class SignInController {
     _model = _model.copyWith(
       email: email,
       password: password,
-      phone: phone,
       name: name,
       formType: formType,
       isLoading: isLoading,

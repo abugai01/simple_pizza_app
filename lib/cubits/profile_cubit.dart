@@ -73,7 +73,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       controllers[Profile.NAME] = TextEditingController(text: profile.name);
       controllers[Profile.SURNAME] =
           TextEditingController(text: profile.surname);
-      controllers[Profile.PHONE] = TextEditingController(text: profile.phone);
       controllers[Profile.EMAIL] = TextEditingController(text: profile.email);
     }
 
@@ -165,8 +164,8 @@ class ProfileCubit extends Cubit<ProfileState> {
           await database.getProfile(); //todo: this cant's be null!
 
       if (profile == null) {
-        Profile newProfile = Profile.createNew(
-            name: name, surname: surname, phone: phone, email: email);
+        Profile newProfile =
+            Profile.createNew(name: name, surname: surname, email: email);
 
         await database.setProfile(data: newProfile.toMap());
         //todo: maybe load profile here?

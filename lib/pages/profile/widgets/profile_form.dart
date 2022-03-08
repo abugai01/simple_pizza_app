@@ -21,7 +21,6 @@ class ProfileForm extends StatefulWidget {
 class ProfileFormState extends State<ProfileForm> {
   String labelName = "Name";
   String labelSurname = "Surname";
-  String labelPhone = "Phone";
   String labelEmail = "Email";
 
   @override
@@ -68,14 +67,6 @@ class ProfileFormState extends State<ProfileForm> {
               ),
             ),
           ]),
-          const SizedBox(height: 10),
-          // Phone
-          TextFormField(
-            controller: widget.controllers[Profile.PHONE],
-            readOnly: true,
-            decoration: InputDecoration(labelText: labelPhone),
-            //todo: phone validation and mask1
-          ),
           const SizedBox(height: 10),
           // Email
           TextFormField(

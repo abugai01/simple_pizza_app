@@ -116,7 +116,6 @@ class _SignInFormState extends State<SignInForm> {
   List<Widget> _buildChildren(SignInModel? model) {
     return [
       _buildNameTextField(model),
-      _buildPhoneTextField(model),
       _buildEmailTextField(model),
       _buildPasswordTextField(model),
       const SizedBox(height: 8.0),
@@ -166,29 +165,6 @@ class _SignInFormState extends State<SignInForm> {
               textInputAction: TextInputAction.next,
               onChanged: widget.controller.updateName,
               onEditingComplete: () => _nameEditingComplete(model),
-            ))
-        : Container();
-  }
-
-  Widget _buildPhoneTextField(SignInModel? model) {
-    return (model?.formType == SignInFormType.register)
-        ? Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: TextField(
-              controller: _phoneController,
-              focusNode: _phoneFocusNode,
-              decoration: InputDecoration(
-                labelText: 'Phone',
-                hintText: '+79123456789',
-                errorText: "Incorrect phone",
-                enabled: model?.isLoading == false,
-              ),
-              autocorrect: false,
-              keyboardType: TextInputType.phone,
-              textInputAction: TextInputAction.next,
-              onChanged: widget.controller.updatePhone,
-              //todo: uncomment
-              onEditingComplete: () => _phoneEditingComplete(model),
             ))
         : Container();
   }
