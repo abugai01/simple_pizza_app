@@ -18,9 +18,11 @@ class HomePage extends StatelessWidget {
       stream: auth.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
-          final User? user = snapshot.data;
+          User? user = snapshot.data;
+
           if (user == null) {
             return SignInPage();
+            //todo: on login error (wrong passowrd, etc.)
           }
 
           context.read<FirestoreDatabase>().uid = user.uid;

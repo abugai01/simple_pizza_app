@@ -8,6 +8,9 @@ class ErrorMessages {
   static const String failedToLoad =
       "Couldn't load data from the server. Please try again";
   static const String signInError = "Couldn't sign you in. Please try again";
+  static const String failedToLoadPullToRefresh =
+      "Failed to load data from the server. Pull down to refresh";
+  static const String noDataPullToRefresh = "No data. Pull down to refresh";
 
   static const ValidationErrorMessages validationErrorMessages =
       ValidationErrorMessages();

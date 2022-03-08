@@ -23,7 +23,6 @@ class PersonalInfoPage extends StatelessWidget {
         elevation: 1,
       ),
       body: BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
-        //print(state);
         if (state is ProfileLoadedState) {
           return Column(children: <Widget>[
             Expanded(
@@ -41,7 +40,7 @@ class PersonalInfoPage extends StatelessWidget {
                 //color: Colors.red,
                 height: 65,
                 child: SaveButton(function: () {
-                  //context.read<ProfileCubit>().saveChanges(); //todo: implementation
+                  //context.read<ProfileCubit>().saveChanges(); //todo: implementation of update function!
                   print("fuck");
                   Navigator.pop(context);
                 })),

@@ -82,6 +82,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> loadProfile() async {
     try {
+      log('fuck');
       emit(ProfileLoadingState());
       profile = await database.getProfile(); //todo: null safety!!!
       if (profile != null) {

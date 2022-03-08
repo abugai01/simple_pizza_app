@@ -88,33 +88,13 @@ class CartCubit extends Cubit<CartState> {
   Future<void> createOrder() async {
     try {
       print("trying");
-      await database.setOrder(Order.create(
-          items: _items, total: calculateTotal(_items))); //todo: userId pass!
+      await database
+          .setOrder(Order.create(items: _items, total: calculateTotal(_items)));
       print("order created");
       emptyCart();
     } catch (e) {
       print(e.toString());
     }
-  }
-
-  // It is used for adding all the items from a previous order to cart (but first check that they are present in menu)
-  Future<void> repeatOrder(List<Item> oldItems, List<Item> menuItems) async {
-    emptyCart();
-
-    List<Item> newCart = [];
-
-    for (int i = 0; i < oldItems.length; i++) {
-      for (int j = 0; j < menuItems.length; j++) {
-        if (oldItems[i].id == menuItems[j].id) {
-          Item _item = menuItems[j];
-          _item.quantity = oldItems[i].quantity;
-          newCart.add(_item);
-        }
-      }
-    }
-
-    _items = newCart;
-    emit(CartGenericState(items: _items));
   }
 }
 

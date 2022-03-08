@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_pizza_app/helpers/ui_messages.dart';
 import 'package:simple_pizza_app/models/item.dart';
 import 'package:simple_pizza_app/services/database.dart';
 
-//todo: add isAvailable
 abstract class MenuState {}
 
 class MenuInitState extends MenuState {}
@@ -16,18 +16,14 @@ class MenuLoadedState extends MenuState {
 
   MenuLoadedState({required this.items});
 
-  //todo: remove hardcode
-  List<Item> get pizzas =>
-      items.where((item) => (item.category == 'pizza')).toList();
-  List<Item> get beverages =>
-      items.where((item) => (item.category == 'beverage')).toList();
-  List<Item> get other => items
-      .where(
-          (item) => (item.category != 'pizza' && item.category != 'beverage'))
-      .toList();
+  //todo: props?
 }
 
-class ErrorMenuState extends MenuState {}
+class MenuErrorState extends MenuState {
+  final String error;
+
+  MenuErrorState({this.error = ErrorMessages.errorGeneric});
+}
 
 class MenuCubit extends Cubit<MenuState> {
   final Database database;
@@ -44,10 +40,14 @@ class MenuCubit extends Cubit<MenuState> {
       if (emitLoadingState == true) {
         emit(MenuLoadingState());
       }
-      items = await database.getItems();
+      List<Item> _items = await database.getItems();
+
+      // For simplicity sake, only one category is displayed here
+      items = _items.where((item) => (item.category == 'pizza')).toList();
+
       emit(MenuLoadedState(items: items));
     } catch (e) {
-      emit(ErrorMenuState()); //TODO: show error message
+      emit(MenuErrorState(error: ErrorMessages.noDataPullToRefresh));
       log(e.toString());
     }
   }

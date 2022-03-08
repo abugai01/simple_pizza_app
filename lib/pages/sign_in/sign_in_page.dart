@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:simple_pizza_app/pages/sign_in/mvc/auth_cubit.dart';
 
 import 'mvc/sign_in_form.dart';
 
 class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final AuthCubit authCubit = context.read<AuthCubit>();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Welcome', style: TextStyle(color: Colors.white)),

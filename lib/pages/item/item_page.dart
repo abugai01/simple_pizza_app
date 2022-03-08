@@ -4,9 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:simple_pizza_app/cubits/cart_cubit.dart';
-import 'package:simple_pizza_app/helpers/functions.dart';
 import 'package:simple_pizza_app/models/item.dart';
-import 'package:simple_pizza_app/pages/cart/widgets/incrementor.dart';
 import 'package:simple_pizza_app/pages/item/widgets/item_information_row.dart';
 
 class ItemPage extends StatelessWidget {
@@ -83,59 +81,27 @@ class ItemPage extends StatelessWidget {
                   ),
                 ]),
           ),
-          //todo: separate widget
-          BlocBuilder<CartCubit, CartState>(builder: (context, state) {
-            if (state is CartGenericState) {
-              int howManyInCart =
-                  context.read<CartCubit>().howManyInCart(item.id);
-              num actualSubtotal = item.price * howManyInCart;
-
-              return Container(
-                height: 60,
-                padding: EdgeInsets.symmetric(
-                    horizontal: pageHorizontalPadding, vertical: 5),
-                child: howManyInCart == 0
-                    ? MaterialButton(
-                        child: const Text(
-                          "ADD TO CART",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          //side: BorderSide(color: Colors.red),
-                        ),
-                        onPressed: () {
-                          context.read<CartCubit>().addItemToCart(item);
-                          HapticFeedback.vibrate();
-                        },
-                      )
-                    : Row(children: <Widget>[
-                        Text(
-                            formatWithCurrency(actualSubtotal,
-                                fractionDigits: 2),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20)),
-                        Expanded(child: Container()),
-                        Incrementor(
-                          quantity: howManyInCart,
-                          onAdd: () {
-                            context.read<CartCubit>().addOrSubtract(item.id);
-                          },
-                          onSubtract: () {
-                            context
-                                .read<CartCubit>()
-                                .addOrSubtract(item.id, increment: false);
-                          },
-                          buttonSize: 40,
-                          widthBetweenButtons: 35,
-                        ),
-                      ]),
-              );
-            } else {
-              return const SizedBox();
-            }
-          }),
+          //todo: reuse existing button
+          Container(
+            height: 60,
+            padding: EdgeInsets.symmetric(
+                horizontal: pageHorizontalPadding, vertical: 5),
+            child: MaterialButton(
+              child: const Text(
+                "ADD TO CART",
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Theme.of(context).primaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                //side: BorderSide(color: Colors.red),
+              ),
+              onPressed: () {
+                context.read<CartCubit>().addItemToCart(item);
+                HapticFeedback.vibrate();
+              },
+            ),
+          ),
           const SizedBox(height: 5),
         ],
       ),
